@@ -128,32 +128,6 @@ The project is implemented in Python using the following libraries:
 *   **Scikit-learn** for feature extraction, model training, and evaluation.
     
 
-### **Key Code Snippets**
-
-#### **Data Loading**
-
-`import pandas as pd  df = pd.read_parquet('plain_text/train-00000-of-00001.parquet')`
-
-#### **Preprocessing**
-
-`import re  import string  from nltk.corpus import stopwords  from nltk.tokenize import word_tokenize, sent_tokenize  # Lowercasing  df['transformed_text'] = df['sms'].str.lower()  # Tokenization and removing special characters  df['transformed_text'] = df['transformed_text'].apply(word_tokenize)  df['transformed_text'] = df['transformed_text'].apply(lambda x: [re.sub(r'[^a-zA-Z0-9\s]', '', word) for word in x])  # Removing stopwords  stop_words = set(stopwords.words('english'))  df['transformed_text'] = df['transformed_text'].apply(lambda x: [word for word in x if word not in stop_words and word not in string.punctuation])  # Joining tokens back into strings  df['transformed_text'] = df['transformed_text'].apply(lambda x: ' '.join(x))`
-
-#### **Feature Engineering**
-
-`# Number of characters, words, and sentences  df['Number_Characters'] = df['sms'].apply(len)  df['Number_Words'] = df['sms'].apply(lambda x: len(word_tokenize(x)))  df['Number_Sentences'] = df['sms'].apply(lambda x: len(sent_tokenize(x)))  # Presence of URLs  df['Has_URL'] = df['sms'].apply(lambda x: 1 if re.search(r'http[s]?://\S+', x) else 0)`
-
-#### **Vectorization**
-
-`from sklearn.feature_extraction.text import TfidfVectorizer  tfidf_vectorizer = TfidfVectorizer(stop_words='english', max_features=3000)  tfidf_train = tfidf_vectorizer.fit_transform(x_train.values)  tfidf_test = tfidf_vectorizer.transform(x_test.values)`
-
-#### **Model Training**
-
-`from sklearn.naive_bayes import MultinomialNB  from sklearn.linear_model import LogisticRegression  from sklearn.ensemble import RandomForestClassifier  from sklearn.svm import SVC  # Naive Bayes  nb_classifier = MultinomialNB()  nb_classifier.fit(tfidf_train, y_train)  # Logistic Regression  logistic_classifier = LogisticRegression()  logistic_classifier.fit(tfidf_train, y_train)  # Random Forest  rf_classifier = RandomForestClassifier()  rf_classifier.fit(tfidf_train, y_train)  # SVM  svm_classifier = SVC()  svm_classifier.fit(tfidf_train, y_train)`
-
-#### **Model Evaluation**
-
-`from sklearn.metrics import accuracy_score, classification_report  # Naive Bayes  pred_nb = nb_classifier.predict(tfidf_test)  print('Naive Bayes Accuracy:', accuracy_score(y_test, pred_nb))  print(classification_report(y_test, pred_nb))  # Logistic Regression  pred_logistic = logistic_classifier.predict(tfidf_test)  print('Logistic Regression Accuracy:', accuracy_score(y_test, pred_logistic))  print(classification_report(y_test, pred_logistic))  # Random Forest  pred_rf = rf_classifier.predict(tfidf_test)  print('Random Forest Accuracy:', accuracy_score(y_test, pred_rf))  print(classification_report(y_test, pred_rf))  # SVM  pred_svm = svm_classifier.predict(tfidf_test)  print('SVM Accuracy:', accuracy_score(y_test, pred_svm))  print(classification_report(y_test, pred_svm))`
-
 ## **Results**
 -----------
 
