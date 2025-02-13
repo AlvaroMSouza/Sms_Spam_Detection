@@ -145,11 +145,9 @@ The best-performing model was **Random Forest**, achieving an accuracy of **97
 **How to Run the Code**
 -----------------------
 
-1.  bashCopypip install pandas numpy matplotlib seaborn nltk scikit-learn
+1.  Copy pip install pandas numpy matplotlib seaborn nltk scikit-learn
     
-2.  Download the dataset from [Hugging Face](https://huggingface.co/datasets/ucirvine/sms_spam).
-    
-3.  Run the provided Python script to preprocess the data, train the models, and evaluate their performance.
+2.  Run the provided Python script to preprocess the data, train the models, and evaluate their performance.
     
 
 **Future Improvements**
